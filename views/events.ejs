@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Management - Social Service Unit</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/events.css">
+</head>
+<body>
+     <!-- Main Content -->
+    <div class="dashboard-container">
+        <!-- Side Menu -->
+        <aside class="side-menu">
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3>Welcome, <%= user.name %></h3>
+                <p>Super Administrator</p>
+            </div>
+            
+            <nav class="side-nav">
+                <a href="/dashboard" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="/events" class="nav-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="/settings" class="nav-item active">
+                    <i class="fas fa-cogs"></i>
+                    <span>Settings</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="/logout" class="nav-item logout-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                    <div class="nav-indicator"></div>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Events Management</h1>
+                <button class="btn btn-primary" onclick="showCreateEventForm()">
+                    <i class="fas fa-plus"></i> Create Event
+                </button>
+            </div>
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <%= error %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+            
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <%= success %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+
+            <!-- Create/Edit Event Form -->
+            <div id="eventFormContainer" class="card mb-4" style="display: none;">
+                <div class="card-header">
+                    <h3 id="formTitle">Create New Event</h3>
+                </div>
+                <div class="card-body">
+                    <form id="eventForm" enctype="multipart/form-data">
+                        <input type="hidden" id="eventId" name="eventId">
+                        
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Event Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="event_date" class="form-label">Event Date</label>
+                                <input type="datetime-local" class="form-control" id="event_date" name="event_date" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" name="location" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Event Type</label>
+                            <select class="form-control" id="type" name="type" required>
+                                <option value="">Select event type</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Seminar">Seminar</option>
+                                <option value="Conference">Conference</option>
+                                <option value="Meeting">Meeting</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="photo" class="form-label">Event Photo</label>
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                            <div id="currentPhotoPreview" class="mt-2" style="display: none;">
+                                <img id="currentPhoto" src="" alt="Current event photo" style="max-width: 200px; max-height: 200px;">
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Create Event</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideEventForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div class="row" id="eventsList">
+                <% if (typeof events !== 'undefined' && events.length > 0) { %>
+                    <% events.forEach(function(event) { %>
+                        <div class="col-md-4 mb-4" data-event-id="<%= event.id %>">
+                            <div class="card event-card">
+                                <% if (event.photo_url) { %>
+                                    <img src="<%= event.photo_url %>" class="card-img-top" alt="Event photo">
+                                <% } else { %>
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-calendar-alt fa-3x text-muted"></i>
+                                    </div>
+                                <% } %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= event.title %></h5>
+                                    <p class="card-text"><%= event.description %></p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <i class="fas fa-map-marker-alt"></i> <%= event.location %><br>
+                                            <i class="fas fa-calendar"></i> <%= new Date(event.event_date).toLocaleString() %><br>
+                                            <i class="fas fa-tag"></i> <%= event.type %>
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="editEvent('<%= event.id %>')">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteEvent('<%= event.id %>')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            No events found. Create your first event by clicking the "Create Event" button above.
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Show/Hide Form Functions
+        function showCreateEventForm() {
+            document.getElementById('eventFormContainer').style.display = 'block';
+            document.getElementById('formTitle').textContent = 'Create New Event';
+            document.getElementById('submitBtn').textContent = 'Create Event';
+            document.getElementById('eventId').value = '';
+            document.getElementById('eventForm').reset();
+            document.getElementById('currentPhotoPreview').style.display = 'none';
+        }
+
+        function hideEventForm() {
+            document.getElementById('eventFormContainer').style.display = 'none';
+            document.getElementById('eventForm').reset();
+        }
+
+        // Form Submit Handler
+        document.getElementById('eventForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const eventId = formData.get('eventId');
+            const url = eventId ? `/events/${eventId}` : '/events';
+            const method = eventId ? 'PUT' : 'POST';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while saving the event');
+            }
+        });
+
+        // Edit Event Function
+        async function editEvent(eventId) {
+            try {
+                const response = await fetch(`/events/${eventId}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const event = result.event;
+                    document.getElementById('eventId').value = event.id;
+                    document.getElementById('title').value = event.title;
+                    document.getElementById('description').value = event.description;
+                    document.getElementById('event_date').value = new Date(event.event_date).toISOString().slice(0, 16);
+                    document.getElementById('location').value = event.location;
+                    document.getElementById('type').value = event.type;
+
+                    if (event.photo_url) {
+                        document.getElementById('currentPhoto').src = event.photo_url;
+                        document.getElementById('currentPhotoPreview').style.display = 'block';
+                    } else {
+                        document.getElementById('currentPhotoPreview').style.display = 'none';
+                    }
+
+                    document.getElementById('formTitle').textContent = 'Edit Event';
+                    document.getElementById('submitBtn').textContent = 'Update Event';
+                    document.getElementById('eventFormContainer').style.display = 'block';
+                } else {
+                    alert('Error loading event details');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading event details');
+            }
+        }
+
+        // Delete Event Function
+        async function deleteEvent(eventId) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                try {
+                    const response = await fetch(`/events/${eventId}`, {
+                        method: 'DELETE'
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        const eventElement = document.querySelector(`[data-event-id="${eventId}"]`);
+                        if (eventElement) {
+                            eventElement.remove();
+                        }
+                        if (document.querySelectorAll('[data-event-id]').length === 0) {
+                            window.location.reload();
+                        }
+                    } else {
+                        alert('Error deleting event: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error deleting event');
+                }
+            }
+        }
+
+        // Image Preview
+        document.getElementById('photo').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('currentPhoto').src = e.target.result;
+                    document.getElementById('currentPhotoPreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html> 

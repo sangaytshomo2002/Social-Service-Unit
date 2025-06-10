@@ -1,0 +1,589 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #008000;
+}
+
+.logo span {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #555;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #008000;
+}
+
+.auth-buttons .btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn.login {
+  background-color: transparent;
+  border: 2px solid #008000;
+  color: #008000;
+}
+
+.btn.signup {
+  background-color: #008000;
+  color: white;
+  border: 2px solid #008000;
+}
+
+/* Main Login Form Container */
+main {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+main h1 {
+  color: #008000;
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+main h2 {
+  color: #666;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  font-weight: normal;
+}
+
+/* Login Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.login-form label {
+  color: #444;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.login-form input:hover {
+  border-color: #008000;
+}
+
+.login-form input:focus {
+  border-color: #008000;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.1);
+}
+
+/* Remember Me & Forgot Password */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #008000;
+}
+
+.forgot-password {
+  color: #008000;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #006400;
+  text-decoration: underline;
+}
+
+/* Form Buttons */
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-buttons .btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn.green {
+  background: #008000;
+  color: white;
+}
+
+.btn.yellow {
+  background: #ffd700;
+  color: #333;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Social Login Options */
+.social-login {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.social-login p {
+  color: #666;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.social-login p::before,
+.social-login p::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.social-login p::before {
+  left: 0;
+}
+
+.social-login p::after {
+  right: 0;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.social-btn {
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-color: #008000;
+}
+
+.social-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Sign Up Link */
+.signup-link {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.signup-link a {
+  color: #008000;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Header Icons - Creative styling for profile and logout */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-right: 15px;
+}
+
+.icon-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 8px 8px 16px #d9d9d9,
+             -8px -8px 16px #ffffff;
+}
+
+.icon-button i {
+  font-size: 2rem;
+  color: #2ecc71;
+  transition: all 0.3s ease;
+}
+
+.icon-button:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 15px 25px rgba(46, 204, 113, 0.25);
+}
+
+.icon-button:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: inset 4px 4px 8px #d9d9d9,
+              inset -4px -4px 8px #ffffff;
+}
+
+/* Profile icon specific styles */
+.icon-button:not(.logout-btn) i {
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.2rem;
+}
+
+/* Logout icon specific styles */
+.icon-button.logout-btn i {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.2rem;
+}
+
+/* Tooltip styles */
+.icon-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  padding: 8px 16px;
+  border-radius: 25px;
+  background: #333;
+  color: white;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+}
+
+.icon-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .auth-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  main {
+    margin: 2rem 1rem;
+    padding: 1.5rem;
+  }
+
+  .form-options {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .social-buttons {
+    flex-wrap: wrap;
+  }
+}
+
+/* Add these variables at the top of the file */
+:root {
+    --primary: #2ecc71;
+    --secondary: #27ae60;
+    --text: #333;
+    --text-light: #666;
+    --bg: #f9f9f9;
+    --card: #fff;
+    --shadow: rgba(0,0,0,0.1);
+    --border: #e0e0e0;
+    --heading: #2c3e50;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: var(--card);
+    color: var(--text);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.company-info h3,
+.newsletter h3 {
+    color: var(--heading);
+    margin-bottom: 1rem;
+}
+
+.company-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.company-info ul li {
+    margin: 0.5rem 0;
+}
+
+.company-info ul li a {
+    text-decoration: none;
+    color: var(--text);
+    transition: color 0.3s;
+}
+
+.company-info ul li a:hover {
+    color: var(--primary);
+}
+
+.newsletter input[type="email"] {
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text);
+    margin-right: 0.5rem;
+    width: 200px;
+}
+
+.newsletter button {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--primary);
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.newsletter button:hover {
+    background-color: var(--secondary);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-light);
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .newsletter input[type="email"] {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .newsletter button {
+        width: 100%;
+    }
+}
+
+.login-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-container h2 {
+  color: #7f8c8d;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signup-form label {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.signup-form input {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.signup-form input:focus {
+  outline: none;
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn.green {
+  background: #2ecc71;
+  color: white;
+}
+
+.btn.green:hover {
+  background: #27ae60;
+}
+
+.btn.yellow {
+  background: #f1c40f;
+  color: white;
+}
+
+.btn.yellow:hover {
+  background: #f39c12;
+}

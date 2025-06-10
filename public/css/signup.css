@@ -1,0 +1,562 @@
+/* ==========================================================================
+   Social Service Unit - Signup Page Styles
+   ========================================================================== */
+
+/* Main Content */
+main {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+main h1 {
+    text-align: center;
+    color: var(--heading);
+    margin-bottom: 0.5rem;
+}
+
+main h2 {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* Signup Form */
+.signup-form {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px var(--shadow);
+}
+
+.signup-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.signup-form input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.signup-form input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-light);
+    outline: none;
+}
+
+/* Form Buttons */
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.form-buttons .btn {
+    flex: 1;
+    text-align: center;
+}
+
+/* Error Message */
+.error-message {
+    display: none;
+    background-color: var(--error);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.error-message.show {
+    display: block;
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Success Overlay */
+.success-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.success-overlay.show {
+    display: flex;
+}
+
+.success-message {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px var(--shadow);
+}
+
+.loading-icon {
+    border: 4px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        margin: 1rem auto;
+    }
+
+    .signup-form {
+        padding: 1.5rem;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Reset and Base Styles */
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #008000;
+}
+
+.logo span {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #555;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #008000;
+}
+
+.auth-buttons .btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn.login {
+  background-color: transparent;
+  border: 2px solid #008000;
+  color: #008000;
+}
+
+.btn.signup {
+  background-color: #008000;
+  color: white;
+  border: 2px solid #008000;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: #f0f5f0;
+}
+
+.hero-content h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+.hero-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Header and Navigation */
+header {
+  background: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  color: #008000;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #008000;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-buttons .btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn.green {
+  background-color: #008000;
+  color: white;
+  border: 2px solid #008000;
+}
+
+.btn.yellow {
+  background-color: #fff3cd;
+  color: #333;
+  border: 2px solid #ffd700;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+  background-color: #0f0f0f;
+  color: white;
+  padding: 40px 20px;
+  margin-top: 4rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.footer-container div {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-left h3,
+.footer-right h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.footer-right input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: white;
+}
+
+.footer-right input:focus {
+  outline: none;
+  border-color: #008000;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 20px;
+  font-size: 0.9em;
+  border-top: 1px solid #333;
+}
+
+/* Header Icons - Creative styling for profile and logout */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-right: 15px;
+}
+
+.icon-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 8px 8px 16px #d9d9d9,
+             -8px -8px 16px #ffffff;
+}
+
+.icon-button i {
+  font-size: 2rem;
+  color: #2ecc71;
+  transition: all 0.3s ease;
+}
+
+.icon-button:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 15px 25px rgba(46, 204, 113, 0.25);
+}
+
+.icon-button:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: inset 4px 4px 8px #d9d9d9,
+              inset -4px -4px 8px #ffffff;
+}
+
+/* Profile icon specific styles */
+.icon-button:not(.logout-btn) i {
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.2rem;
+}
+
+/* Logout icon specific styles */
+.icon-button.logout-btn i {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.2rem;
+}
+
+/* Tooltip styles */
+.icon-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  padding: 8px 16px;
+  border-radius: 25px;
+  background: #333;
+  color: white;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+}
+
+.icon-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Hover ring animation */
+.icon-button::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: transparent;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.icon-button:hover::before {
+  border-color: currentColor;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Welcome Popup Styles */
+.welcome-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
+  padding: 25px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  text-align: center;
+  min-width: 300px;
+  border: 2px solid rgba(255,255,255,0.1);
+  animation: welcomeIn 0.6s ease-out, 
+             welcomeOut 0.5s ease-in 3.5s forwards;
+}
+
+@keyframes welcomeIn {
+  from { 
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.8);
+  }
+  to { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes welcomeOut {
+  to { 
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.8);
+    visibility: hidden;
+  }
+}
+
+.welcome-popup span {
+  color: white;
+  display: block;
+  line-height: 1.4;
+}
+
+.welcome-popup .welcome-title {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.welcome-popup .welcome-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.welcome-popup .welcome-tagline {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.signup-button {
+  background-color: #008000;
+  color: white;
+  border: 2px solid #008000;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: #006700;
+}
+
+.signup-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+

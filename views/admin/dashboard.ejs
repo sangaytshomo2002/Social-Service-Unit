@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SSU</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .registration-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: var(--card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .registration-table th,
+        .registration-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .registration-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .registration-table tr:hover {
+            background: var(--bg);
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #ffeeba;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background: var(--card);
+            width: 90%;
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Side Menu -->
+        <div class="side-menu">
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3>Admin Dashboard</h3>
+                <p>Welcome back!</p>
+            </div>
+            
+            <nav class="side-nav">
+                <a href="/admin/dashboard" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="/admin/registrations" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Registrations</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="/admin/settings" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="/admin/logout" class="nav-item logout-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Registration Management</h1>
+                <div class="date-time">
+                    <i class="fas fa-calendar"></i>
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Registrations</h3>
+                        <div class="stat-number" id="totalRegistrations">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Pending</h3>
+                        <div class="stat-number" id="pendingCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Approved</h3>
+                        <div class="stat-number" id="approvedCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registrations Table -->
+            <table class="registration-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Student Number</th>
+                        <th>Course</th>
+                        <th>Year</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="registrationsTableBody">
+                    <% registrations.forEach(registration => { %>
+                        <tr data-id="<%= registration.id %>">
+                            <td><%= registration.name %></td>
+                            <td><%= registration.student_number %></td>
+                            <td><%= registration.course %></td>
+                            <td><%= registration.year %></td>
+                            <td>
+                                <span class="status-badge status-<%= registration.status.toLowerCase() %>">
+                                    <%= registration.status %>
+                                </span>
+                            </td>
+                            <td class="action-buttons">
+                                <button class="btn btn-edit" onclick="openEditModal('<%= registration.id %>')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-delete" onclick="deleteRegistration('<%= registration.id %>')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                                <% if (registration.status === 'pending') { %>
+                                    <button class="btn btn-approve" onclick="updateStatus('<%= registration.id %>', 'approved')">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button class="btn btn-reject" onclick="updateStatus('<%= registration.id %>', 'rejected')">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Registration</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId" name="id">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input type="text" id="editName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editStudentNumber">Student Number</label>
+                    <input type="text" id="editStudentNumber" name="student_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCourse">Course</label>
+                    <select id="editCourse" name="course" required>
+                        <option value="BE Civil Engineering">BE Civil Engineering</option>
+                        <option value="BE ICE">BE ICE</option>
+                        <option value="BE ECE">BE ECE</option>
+                        <option value="BE EE">BE EE</option>
+                        <option value="BE GE">BE GE</option>
+                        <option value="BE ME">BE ME</option>
+                        <option value="Architecture">Architecture</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editYear">Year</label>
+                    <select id="editYear" name="year" required>
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Fourth Year">Fourth Year</option>
+                        <option value="Fifth Year">Fifth Year</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-edit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Update date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Update stats
+        function updateStats() {
+            const rows = document.querySelectorAll('#registrationsTableBody tr');
+            const stats = {
+                total: rows.length,
+                pending: 0,
+                approved: 0
+            };
+
+            rows.forEach(row => {
+                const status = row.querySelector('.status-badge').textContent.trim().toLowerCase();
+                if (status === 'pending') stats.pending++;
+                if (status === 'approved') stats.approved++;
+            });
+
+            document.getElementById('totalRegistrations').textContent = stats.total;
+            document.getElementById('pendingCount').textContent = stats.pending;
+            document.getElementById('approvedCount').textContent = stats.approved;
+        }
+
+        // Edit registration
+        function openEditModal(id) {
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            const modal = document.getElementById('editModal');
+            
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = row.cells[0].textContent;
+            document.getElementById('editStudentNumber').value = row.cells[1].textContent;
+            document.getElementById('editCourse').value = row.cells[2].textContent;
+            document.getElementById('editYear').value = row.cells[3].textContent;
+
+            modal.style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // Handle form submission
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const id = formData.get('id');
+
+            try {
+                const response = await fetch(`/admin/registration/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Update the table row
+                    const row = document.querySelector(`tr[data-id="${id}"]`);
+                    row.cells[0].textContent = data.name;
+                    row.cells[1].textContent = data.student_number;
+                    row.cells[2].textContent = data.course;
+                    row.cells[3].textContent = data.year;
+                    closeEditModal();
+                } else {
+                    alert('Error updating registration');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating registration');
+            }
+        });
+
+        // Delete registration
+        async function deleteRegistration(id) {
+            if (!confirm('Are you sure you want to delete this registration?')) return;
+
+            try {
+                const response = await fetch(`/admin/registration/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    document.querySelector(`tr[data-id="${id}"]`).remove();
+                    updateStats();
+                } else {
+                    alert('Error deleting registration');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting registration');
+            }
+        }
+
+        // Update registration status
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch(`/admin/registration/${id}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+
+                if (response.ok) {
+                    const row = document.querySelector(`tr[data-id="${id}"]`);
+                    const statusBadge = row.querySelector('.status-badge');
+                    statusBadge.textContent = status;
+                    statusBadge.className = `status-badge status-${status.toLowerCase()}`;
+                    
+                    // Remove approve/reject buttons if status is updated
+                    if (status !== 'pending') {
+                        const actionButtons = row.querySelector('.action-buttons');
+                        const statusButtons = actionButtons.querySelectorAll('.btn-approve, .btn-reject');
+                        statusButtons.forEach(button => button.remove());
+                    }
+
+                    updateStats();
+                } else {
+                    alert('Error updating status');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating status');
+            }
+        }
+
+        // Initialize stats on page load
+        updateStats();
+    </script>
+</body>
+</html> 

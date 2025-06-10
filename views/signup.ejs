@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - Social Service Unit</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .error-message {
+      display: none;
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .success-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .success-overlay.show {
+      display: flex;
+    }
+
+    .success-message {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .loading-icon {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="signup-header">
+      <h1>Create Account</h1>
+      <h2>Join our community of volunteers</h2>
+    </div>
+
+    <% if (typeof error !== 'undefined') { %>
+      <div class="error-message show">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form class="signup-form" action="/signup" method="POST">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+      </div>
+
+      <div class="form-group">
+        <label for="studentId">Student ID</label>
+        <input type="text" id="studentId" name="studentId" required placeholder="e.g. 07230059" pattern="[0-9]{8}" title="Please enter a valid 8-digit student ID">
+      </div>
+
+      <div class="form-group">
+        <label for="course">Course</label>
+        <select id="course" name="course" required>
+          <option value="" disabled selected>Select your course</option>
+          <option value="DSDA">DSDA</option>
+          <option value="EPS">EPS</option>
+          <option value="DCPM">DCPM</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Physics">Physics</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cid">CID</label>
+        <input 
+          type="text" 
+          id="cid" 
+          name="cid" 
+          required 
+          placeholder="e.g. 10902000105" 
+          pattern="[0-9]{11}" 
+          title="Please enter a valid 11-digit CID number"
+          maxlength="11"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input 
+          type="tel" 
+          id="phone" 
+          name="phone" 
+          required 
+          placeholder="e.g. 17123456" 
+          pattern="[0-9]{8}" 
+          title="Please enter a valid 8-digit phone number"
+          maxlength="8"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="Create a strong password">
+        <div class="password-strength">
+          <div class="password-strength-bar"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn green">Create Account</button>
+        <a href="/login" class="btn yellow">Already have an account?</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="success-overlay">
+    <div class="success-message">
+      <div class="loading-icon"></div>
+      <h3>Creating your account...</h3>
+    </div>
+  </div>
+
+  <script>
+    // Password strength checker
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.querySelector('.password-strength-bar');
+    
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      let strength = 0;
+      
+      if (password.length >= 8) strength++;
+      if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+      if (password.match(/[0-9]/)) strength++;
+      
+      strengthBar.className = 'password-strength-bar';
+      if (strength === 1) strengthBar.classList.add('strength-weak');
+      if (strength === 2) strengthBar.classList.add('strength-medium');
+      if (strength === 3) strengthBar.classList.add('strength-strong');
+    });
+
+    // Form submission and validation
+    const form = document.querySelector('.signup-form');
+    const confirmInput = document.getElementById('confirmPassword');
+    const successOverlay = document.querySelector('.success-overlay');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Password match validation
+      if (passwordInput.value !== confirmInput.value) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message show';
+        errorDiv.textContent = 'Passwords do not match!';
+        form.insertBefore(errorDiv, form.firstChild);
+        return false;
+      }
+
+      try {
+        // Show loading overlay
+        successOverlay.style.display = 'flex';
+
+        // Get form data
+        const formData = {
+          name: document.getElementById('name').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          studentId: document.getElementById('studentId').value.trim(),
+          course: document.getElementById('course').value,
+          cid: document.getElementById('cid').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          password: passwordInput.value,
+          confirmPassword: confirmInput.value
+        };
+
+        // Send signup request
+        const response = await fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Signup failed');
+        }
+
+        // Update success message
+        const successMessage = document.querySelector('.success-message h3');
+        successMessage.textContent = 'Account created! Check your email for verification code.';
+
+        // Redirect to verification page after 2 seconds
+        setTimeout(() => {
+          window.location.href = '/verify-email';
+        }, 2000);
+
+      } catch (error) {
+        // Hide loading overlay
+        successOverlay.style.display = 'none';
+
+        // Show error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message show';
+        errorDiv.textContent = error.message;
+        form.insertBefore(errorDiv, form.firstChild);
+      }
+    });
+  </script>
+</body>
+</html>

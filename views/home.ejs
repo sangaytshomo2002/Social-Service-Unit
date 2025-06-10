@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSU - Social Service Unit</title>
+  <link rel="stylesheet" href="/css/style1.css" />
+  <!-- Add Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 2rem;
+    }
+
+    .icon-button {
+      color: #333;
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .icon-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      background: #f8f8f8;
+    }
+
+    .icon-button[data-tooltip]:before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 10px;
+      border-radius: 4px;
+      background: #333;
+      color: white;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .icon-button[data-tooltip]:hover:before {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .logout-btn {
+      color: #e74c3c;
+    }
+
+    .logout-btn:hover {
+      background: #fff0f0;
+    }
+
+    @media (max-width: 768px) {
+      .header-right {
+        margin-left: 1rem;
+        gap: 0.5rem;
+      }
+      
+      .icon-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <% if (locals.user) { %>
+    <div class="welcome-popup">
+      <span class="welcome-title">✨ Welcome to SSU ✨</span>
+      <span class="welcome-name"><%= user.name %></span>
+      <span class="welcome-tagline">Together we make a difference!</span>
+    </div>
+  <% } %>
+
+  <header class="navbar">
+    <div class="logo">SSU <span>Social Service Unit</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about1">About us</a></li>
+        <li><a href="/userevents">Event</a></li>
+        <li><a href="/contact">Contact us</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <a href="/profile" class="icon-button" data-tooltip="My Profile">
+        <i class="fas fa-user-circle"></i>
+      </a>
+      <a href="/logout" class="icon-button logout-btn" data-tooltip="Sign Out">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>How can social services agencies become more agile?</h1>
+      <div class="hero-slider">
+        <div class="slider-track">
+          <div class="slide">
+            <img src="/image/cleaning.png" alt="Cleaning Campaign">
+            <div class="slide-label">
+              <span class="label-text">Community Cleaning</span>
+              <span class="label-description">Making our world cleaner, one step at a time</span>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="/image/Volunter.png" alt="Volunteer Work">
+            <div class="slide-label">
+              <span class="label-text">Volunteer Work</span>
+              <span class="label-description">Together we can make a difference</span>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="/image/awarness.png" alt="Awareness Programs">
+            <div class="slide-label">
+              <span class="label-text">Awareness Programs</span>
+              <span class="label-description">Educating for a better tomorrow</span>
+            </div>
+          </div>
+        </div>
+        <div class="slider-nav">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <h2>We Always Provide The Best Service</h2>
+    <div class="description">
+      <p>Services</p>
+      <p>We provide help to those in need by organizing cleaning campaigns in neighborhoods, conducting volunteer drives, and raising awareness through outreach programs. Our aim is to build a healthier and more connected community.</p>
+    </div>
+
+    <div class="service-cards">
+      <div class="card">
+        <img src="/image/cleaning.png" alt="Cleaning Campaign" />
+        <h3>Cleaning Campaign</h3>
+        <p>We organize neighborhood clean-up drives, ensuring the spaces where we live and play are clean and safe for everyone.</p>
+      </div>
+      <div class="card">
+        <img src="/image/Volunter.png" alt="Volunteer Work" />
+        <h3>Volunteer Work</h3>
+        <p>Our volunteers actively participate in helping the elderly, tutoring children, and supporting local events that need manpower.</p>
+      </div>
+      <div class="card">
+        <img src="/image/awarness.png" alt="Awareness Program" />
+        <h3>Awareness and Outreach Programs</h3>
+        <p>From health to education, we run various campaigns to keep the public informed and involved in improving community wellbeing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>Find us</h2>
+    <ul class="contact-list">
+      <li><strong>Call Us</strong><br /><a href="tel:+123456789">+123 456 789</a></li>
+      <li><strong>Email Now</strong><br /><a href="mailto:ssu@agency.org">ssu@agency.org</a></li>
+      <li><strong>Location</strong><br />Street 123, New York, USA</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="company-info">
+        <h3>Know More</h3>
+        <ul>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+      <div class="newsletter">
+        <h3>Newsletter</h3>
+        <input type="email" placeholder="Enter your email" />
+        <button>Send</button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Social Service Unit. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
