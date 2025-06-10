@@ -138,17 +138,6 @@
                                     <p class="user-course"><i class="fas fa-graduation-cap"></i> <%= user.course %></p>
                                     <p class="user-phone"><i class="fas fa-phone"></i> <%= user.phone %></p>
                                 </div>
-                                <div class="user-card-actions">
-                                    <button class="card-btn view-btn" onclick="viewUser('<%= user.id %>')">
-                                        <i class="fas fa-eye"></i> View
-                                    </button>
-                                    <button class="card-btn edit-btn" onclick="editUser('<%= user.id %>')">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </button>
-                                    <button class="card-btn delete-btn" onclick="deleteUser('<%= user.id %>')">
-                                        <i class="fas fa-trash-alt"></i> Delete
-                                    </button>
-                                </div>
                                 <div class="registration-time">
                                     <i class="far fa-clock"></i>
                                     Registered: <%= new Date(user.created_at).toLocaleDateString() %>
@@ -165,50 +154,7 @@
                 </div>
             </section>
 
-            <!-- Recent Activity Section -->
-            <section class="recent-activity">
-                <h2>Recent Activity</h2>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="activity-details">
-                            <h4>New User Registration</h4>
-                            <p>John Doe registered as a new user</p>
-                            <span class="activity-time">2 hours ago</span>
-                        </div>
-                    </div>
-
-                    <div class="activity-item">
-                        <div class="activity-icon">
-                            <i class="fas fa-tasks"></i>
-                        </div>
-                        <div class="activity-details">
-                            <h4>Service Request</h4>
-                            <p>New service request from Jane Smith</p>
-                            <span class="activity-time">4 hours ago</span>
-                        </div>
-                    </div>
-
-                    <div class="activity-item">
-                        <div class="activity-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="activity-details">
-                            <h4>Task Completed</h4>
-                            <p>Service request #123 has been completed</p>
-                            <span class="activity-time">Yesterday</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-
-    
-
+            
     <!-- Footer Section -->
     <footer class="footer">
         <div class="footer-content">
