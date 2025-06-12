@@ -41,7 +41,7 @@ router.get('/logout', logout);
 // Static pages
 router.get('/about', (req, res) => res.render('about', { user: req.session.user }));
 router.get('/contact', (req, res) => res.render('contact', { user: req.session.user }));
-
+router.get('/abouts', (req, res) => res.render('abouts', { user: req.session.user }));
 // Admin routes
 router.get('/settings', isAuthenticated, isAdmin, (req, res) => {
   res.render('settings', { 
