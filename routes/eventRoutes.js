@@ -23,17 +23,18 @@ const upload = multer({
     }
 });
 
-// Public event routes
+// ======= PUBLIC ROUTES ======= //
 router.get('/user', eventController.getUserEventsPage);
 
-// Admin event routes - Order matters!
+// ======= ADMIN ROUTES ======= //
+// Order matters: specific routes before dynamic ones
 router.get('/', isAdmin, eventController.getEventsPage);
 router.post('/', isAdmin, upload.single('photo'), eventController.createEvent);
-router.get('/:id([0-9]+)', isAdmin, eventController.getEvent); // Only match numeric IDs
-router.put('/:id([0-9]+)', isAdmin, upload.single('photo'), eventController.updateEvent);
-router.delete('/:id([0-9]+)', isAdmin, eventController.deleteEvent);
+router.get('/:id(\\d+)', isAdmin, eventController.getEvent); // Only numeric IDs
+router.put('/:id(\\d+)', isAdmin, upload.single('photo'), eventController.updateEvent);
+router.delete('/:id(\\d+)', isAdmin, eventController.deleteEvent);
 
-// Error handling for multer
+// ======= ERROR HANDLING FOR MULTER ======= //
 router.use((error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         return res.status(400).json({
@@ -49,4 +50,4 @@ router.use((error, req, res, next) => {
     next();
 });
 
-module.exports = router; 
+module.exports = router;
