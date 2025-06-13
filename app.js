@@ -6,6 +6,7 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const { pool } = require('./config/db');
+const { initializeDatabase } = require('./config/initDb');
 
 // Import middleware
 const { logRequest } = require('./middleware/auth');
@@ -21,7 +22,13 @@ const app = express();
 
 // Environment setup
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
+
+// Initialize database tables
+initializeDatabase().catch(err => {
+    console.error('Failed to initialize database tables:', err);
+    process.exit(1);
+});
 
 // Log important ENV (only in development)
 if (NODE_ENV === 'development') {

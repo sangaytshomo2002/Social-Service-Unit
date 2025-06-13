@@ -2,30 +2,6 @@ const { pool } = require('../config/db');
 const path = require('path');
 const fs = require('fs').promises;
 
-// Initialize events table
-const initEventsTable = async () => {
-    try {
-        // Create the events table with all required columns
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS events (
-                id SERIAL PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                description TEXT,
-                event_date TIMESTAMP NOT NULL,
-                location VARCHAR(255),
-                type VARCHAR(50),
-                photo_url TEXT,
-                created_by INTEGER REFERENCES users(id),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-        console.log('✅ Events table initialized successfully');
-    } catch (error) {
-        console.error('Error initializing events table:', error);
-    }
-};
-
 // Get user events page
 exports.getUserEventsPage = async (req, res) => {
     try {
@@ -249,7 +225,4 @@ exports.getEvent = async (req, res) => {
             message: 'Error fetching event: ' + error.message
         });
     }
-};
-
-// Initialize table when the controller is loaded
-initEventsTable(); 
+}; 
