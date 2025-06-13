@@ -30,9 +30,9 @@ router.get('/user', eventController.getUserEventsPage);
 // Order matters: specific routes before dynamic ones
 router.get('/', isAdmin, eventController.getEventsPage);
 router.post('/', isAdmin, upload.single('photo'), eventController.createEvent);
-router.get('/:id(\\d+)', isAdmin, eventController.getEvent); // Only numeric IDs
-router.put('/:id(\\d+)', isAdmin, upload.single('photo'), eventController.updateEvent);
-router.delete('/:id(\\d+)', isAdmin, eventController.deleteEvent);
+router.get('/:id', isAdmin, eventController.getEvent); // Only numeric IDs
+router.put('/:id', isAdmin, upload.single('photo'), eventController.updateEvent);
+router.delete('/:id', isAdmin, eventController.deleteEvent);
 
 // ======= ERROR HANDLING FOR MULTER ======= //
 router.use((error, req, res, next) => {

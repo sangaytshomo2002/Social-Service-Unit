@@ -21,7 +21,7 @@ const app = express();
 
 // Environment setup
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 // Log important ENV (only in development)
 if (NODE_ENV === 'development') {
